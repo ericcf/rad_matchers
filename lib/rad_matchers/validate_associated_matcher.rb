@@ -8,7 +8,6 @@ class ValidateAssociatedMatcher
     @instance = instance
     association_class = @instance.class.reflect_on_association(@attribute).klass
     invalid_record = association_class.new
-    invalid_record.instance_eval { def valid?; false; end }
     invalid_record.stub!(:valid?).and_return(false)
     @instance.send("#{@attribute}=", invalid_record)
     @instance.valid? == false && @instance.errors_on(@attribute)
